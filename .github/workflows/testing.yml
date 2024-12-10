@@ -1,8 +1,21 @@
-name: hello-world
-on: push
+name: Print Regions
+
+on:
+  push:
+    branches:
+      - main
+
 jobs:
-  my-job:
+  loop-regions:
     runs-on: ubuntu-latest
     steps:
-      - name: my-step
-        run: echo "Hello World!"
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Print regions
+        run: |
+          regions="IN,MY,SG"
+          IFS=',' # Set the Internal Field Separator to comma
+          for region in $regions; do
+            echo "Region: $region"
+          done
