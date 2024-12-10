@@ -27,7 +27,7 @@ jobs:
             message="$message <li>Razorpay $region deployed at ${{ env.BETA_PREVIEW_URL }}/razorpay/$region/${{ github.head_ref }} </li>"
           done
 
-          message="# Preview URLS👇🏻 <ul>${message} <li> Axis IN deployed at ${{ env.BETA_PREVIEW_URL }}/axis/IN/${{ github.head_ref }} </li> </ul>"
+          message="Preview URLS👇🏻 <ul>${message} <li> Axis IN deployed at ${{ env.BETA_PREVIEW_URL }}/axis/IN/${{ github.head_ref }} </li> </ul>"
           
           echo "::set-output name=message::$message"   
       
