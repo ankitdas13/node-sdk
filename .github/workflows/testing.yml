@@ -14,7 +14,6 @@ env:
 jobs:
   comment_betapreviewlink_on_propen:
     name: Comment beta preview link on PR open
-    runs-on: [self-hosted]
     steps:
       
       - name: Prepare message with preview URLs
