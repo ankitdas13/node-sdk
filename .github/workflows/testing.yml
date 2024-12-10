@@ -1,9 +1,8 @@
 name: Comment beta preview links on PR open
 
 on:
-  push: 
-    branches:
-       - workflow-testing
+  pull_request:
+    types: [opened, synchronize, reopened] # Listen for PR events
 
 env:
   REPO_OWNER: razorpay
