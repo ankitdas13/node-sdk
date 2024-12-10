@@ -3,7 +3,7 @@ name: Print Regions
 on:
   push:
     branches:
-      - main
+      - workflow-testing
 
 jobs:
   loop-regions:
