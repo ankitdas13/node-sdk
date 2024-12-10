@@ -24,10 +24,12 @@ jobs:
         run: |
           message="# Preview URLS👇🏻"
           for region in $(echo $REGIONS | tr ',' ' '); do
-            message="$message\nRazorpay $region deployed at ${{ env.BETA_PREVIEW_URL }}/razorpay/$region/${{ github.head_ref }}"
+            message="$message\nRazorpay $region deployed at ${{ env.BETA_PREVIEW_URL }}/razorpay/$region/${{ github.head_ref }} /n"
           done
-          message="Axis IN deployed at ${{ env.BETA_PREVIEW_URL }}/axis/IN/${{ github.head_ref }}"
-          echo "$message" > message.txt    
+
+          message="${message} /n Axis IN deployed at ${{ env.BETA_PREVIEW_URL }}/axis/IN/${{ github.head_ref }}"
+          
+          echo "::set-output name=message::$message"   
       
       - name: Comment on PR
         uses: thollander/actions-comment-pull-request@v2
