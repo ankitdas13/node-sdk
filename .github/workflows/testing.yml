@@ -24,10 +24,10 @@ jobs:
         run: |
           message=""
           for region in $(echo $REGIONS | tr ',' ' '); do
-            message="$message \nRazorpay $region deployed at ${{ env.BETA_PREVIEW_URL }}/razorpay/$region/${{ github.head_ref }}"
+            message="$message <li>Razorpay $region deployed at ${{ env.BETA_PREVIEW_URL }}/razorpay/$region/${{ github.head_ref }} </li>"
           done
 
-          message="# Preview URLS👇🏻 \n ${message} <br> Axis IN deployed at ${{ env.BETA_PREVIEW_URL }}/axis/IN/${{ github.head_ref }}"
+          message="# Preview URLS👇🏻 <ul>${message} <li> Axis IN deployed at ${{ env.BETA_PREVIEW_URL }}/axis/IN/${{ github.head_ref }} </li> </ul>"
           
           echo "::set-output name=message::$message"   
       
