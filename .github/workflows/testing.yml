@@ -24,7 +24,7 @@ jobs:
         run: |
           message="# Preview URLS👇🏻"
           for region in $(echo $REGIONS | tr ',' ' '); do
-            message="$message\n Razorpay $region deployed at ${{ env.BETA_PREVIEW_URL }}/razorpay/$region/${{ github.head_ref }} /n"
+            message="$message Razorpay $region deployed at ${{ env.BETA_PREVIEW_URL }}/razorpay/$region/${{ github.head_ref }} /n"
           done
 
           message="${message} /n Axis IN deployed at ${{ env.BETA_PREVIEW_URL }}/axis/IN/${{ github.head_ref }}"
