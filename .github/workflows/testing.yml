@@ -15,7 +15,7 @@ jobs:
   comment_betapreviewlink_on_propen:
     name: Comment beta preview link on PR open
     steps:
-      
+      runs-on: ubuntu-latest
       - name: Prepare message with preview URLs
         id: prepare_message
         run: |
