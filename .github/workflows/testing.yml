@@ -26,6 +26,7 @@ jobs:
           for region in $(echo $REGIONS | tr ',' ' '); do
             message="$message\nRazorpay $region deployed at ${{ env.BETA_PREVIEW_URL }}/razorpay/$region/${{ github.head_ref }}"
           done
+          message="Axis IN deployed at ${{ env.BETA_PREVIEW_URL }}/axis/IN/${{ github.head_ref }}"
           echo "$message" > message.txt    
       
       - name: Comment on PR
