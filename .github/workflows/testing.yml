@@ -36,6 +36,5 @@ jobs:
       - name: Comment on PR
         uses: thollander/actions-comment-pull-request@v2
         with:
-          filePath: message.txt
           message: ${{ steps.prepare_message.outputs.message }}
           pr_number: ${{ github.event.number }}
