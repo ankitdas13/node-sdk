@@ -22,13 +22,14 @@ jobs:
       - name: Prepare message with preview URLs
         id: prepare_message
         run: |
-          message="# Preview URLS👇🏻
-          "
+          message=""
           for region in $(echo $REGIONS | tr ',' ' '); do
             message="$message <br> Razorpay $region deployed at ${{ env.BETA_PREVIEW_URL }}/razorpay/$region/${{ github.head_ref }} <br> "
           done
 
-          message="${message} <br> Axis IN deployed at ${{ env.BETA_PREVIEW_URL }}/axis/IN/${{ github.head_ref }}"
+          message="
+          # Preview URLS👇🏻 
+          ${message} <br> Axis IN deployed at ${{ env.BETA_PREVIEW_URL }}/axis/IN/${{ github.head_ref }}"
           
           echo "::set-output name=message::$message"   
       
