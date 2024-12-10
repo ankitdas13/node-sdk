@@ -1,21 +1,33 @@
-name: Print Regions
+name: Comment beta preview links on PR open
 
 on:
-  push:
+  push: 
     branches:
-      - workflow-testing
+       - workflow-testing
 
+env:
+  REPO_OWNER: razorpay
+  REPO_NAME: docs
+  BETA_PREVIEW_URL: https://betasite.razorpay.com/docs
+  PR_NUMBER: ${{ github.event.number }}
+  REGIONS: "IN,MY,SG"
 jobs:
-  loop-regions:
-    runs-on: ubuntu-latest
+  comment_betapreviewlink_on_propen:
+    name: Comment beta preview link on PR open
+    runs-on: [self-hosted]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Print regions
+      
+      - name: Prepare message with preview URLs
+        id: prepare_message
         run: |
-          regions="IN,MY,SG"
-          IFS=',' # Set the Internal Field Separator to comma
-          for region in $regions; do
-            echo "Region: $region"
+          message="# Preview URLS👇🏻"
+          for region in $(echo $REGIONS | tr ',' ' '); do
+            message="$message\nRazorpay $region deployed at ${{ env.BETA_PREVIEW_URL }}/razorpay/$region/${{ github.head_ref }}"
           done
+          echo "$message" > message.txt    
+      
+      - name: Comment on PR
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: ${{ steps.prepare_message.outputs.message }}
+          pr_number: ${{ github.event.number }}
