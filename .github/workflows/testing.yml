@@ -1,38 +1,8 @@
-name: Comment beta preview links on PR open
-
-on:
-  pull_request:
-    types: [opened, synchronize, reopened] # Listen for PR events
-
-env:
-  REPO_OWNER: razorpay
-  REPO_NAME: docs
-  BETA_PREVIEW_URL: https://betasite.razorpay.com/docs
-  PR_NUMBER: ${{ github.event.number }}
-  REGIONS: "IN,MY,SG"
+name: hello-world
+on: push
 jobs:
-  comment_betapreviewlink_on_propen:
-    name: Comment beta preview link on PR open
+  my-job:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-      repository-projects: write
     steps:
-      - name: Prepare message with preview URLs
-        id: prepare_message
-        run: |
-          message=""
-          for region in $(echo $REGIONS | tr ',' ' '); do
-            message="$message <li>Razorpay $region deployed at ${{ env.BETA_PREVIEW_URL }}/razorpay/$region/${{ github.head_ref }} </li>"
-          done
-
-          message="Preview URLS👇🏻 <ul>${message} <li> Axis IN deployed at ${{ env.BETA_PREVIEW_URL }}/axis/IN/${{ github.head_ref }} </li> </ul>"
-          
-          echo "::set-output name=message::$message"   
-      
-      - name: Comment on PR
-        uses: thollander/actions-comment-pull-request@v2
-        with:
-          message: ${{ steps.prepare_message.outputs.message }}
-          pr_number: ${{ github.event.number }}
+      - name: my-step
+        run: echo "Hello World!"
