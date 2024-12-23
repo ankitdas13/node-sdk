@@ -1,25 +1,11 @@
 name: Sync Docs Content Configs
 
-on:
-  workflow_call:
-    inputs:
-      environment:
-        type: string
-        description: environment to execute
-        required: false
-        default: production
-  workflow_dispatch:
-    inputs:
-      environment:
-        type: string
-        description: environment to execute
-        required: false
-        default: production
+on: push
 
 jobs:
   stage-generate-content-configs:
     name: Staging Generate Content Configs
-    runs-on: [cache-3, self-hosted]
+    runs-on: ubuntu-latest
     steps:          
       - name: Deploy configs for all countries
         uses: ./.github/actions/aws-sync-countries
