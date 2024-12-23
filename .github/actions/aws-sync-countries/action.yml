@@ -1,0 +1,59 @@
+name: aws sync countries action
+description: AWS sync steps
+
+inputs:
+  S3:
+    description: S3 path
+    required: true
+  LOCAL_DIR:
+    description: Local Directory to copy
+    required: true
+  S3_DIR:
+    description: Destination directory in S3
+    required: true
+  WORKING_DIRECTORY:
+    description: Working directory for assets to be synced
+    required: false
+    default: "docs-website-package"
+  CACHE_HEADER:
+    description: Add cache headers
+    required: false
+    default: "public"
+  AWS_ACCESS_KEY_ID:
+    description: aws access key
+    required: false
+  AWS_SECRET_ACCESS_KEY:
+    description: aws secret key
+    required: false
+  DELETE_FILES_FROM_SOURCE:
+    description: weather files which don't exist in local but exist in bucket should be deleted or not
+    required: false
+    default: false
+  UNIVERSE_PUBLIC_ORG_SUPPORTED_COUNTRIES:
+    description: all org supported countries
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: AWS Sync
+      shell: bash
+      env:
+        AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID || env.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY || env.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ap-south-1
+        S3_DIR_COUNTRY: ${{ inputs.S3_DIR }}
+        LOCAL_DIR_COUNTRY: ${{ inputs.LOCAL_DIR }}
+      run: |
+        IFS=',' read -r -a COUNTRIES <<< "${{ inputs.UNIVERSE_PUBLIC_ORG_SUPPORTED_COUNTRIES }}"
+         for COUNTRY in "${COUNTRIES[@]}"; do
+          echo "country :- $COUNTRY"
+          echo "local dir :- $LOCAL_DIR_COUNTRY"
+          echo "local s3 dir country :- $S3_DIR_COUNTRY"
+
+          LOCAL_DIR="$LOCAL_DIR_COUNTRY$COUNTRY"
+          S3_DIR="docs/razorpay/$COUNTRY/$S3_DIR_COUNTRY"
+          
+          echo "local_dir :- $LOCAL_DIR"
+          echo "s3_dir :- $S3_DIR_COUNTRY"
+        done

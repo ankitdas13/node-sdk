@@ -1,0 +1,21 @@
+name: Sync Docs Content Configs
+
+on: push
+
+jobs:
+  stage-generate-content-configs:
+    name: Staging Generate Content Configs
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Deploy configs for all countries
+        uses: ./.github/actions/aws-sync-countries
+        with:
+          S3: s3://rzp-1018-myproject-betasite.dev.com
+          LOCAL_DIR: ./configs-to-export-
+          S3_DIR: configs
+          UNIVERSE_PUBLIC_ORG_SUPPORTED_COUNTRIES: "IN,MY,SG"
+          AWS_SECRET_ACCESS_KEY: "Test"
+          AWS_ACCESS_KEY_ID: "Test"
