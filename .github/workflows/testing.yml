@@ -6,7 +6,10 @@ jobs:
   stage-generate-content-configs:
     name: Staging Generate Content Configs
     runs-on: ubuntu-latest
-    steps:          
+    steps: 
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
       - name: Deploy configs for all countries
         uses: ./.github/actions/aws-sync-countries
         with:
