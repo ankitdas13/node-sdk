@@ -1,8 +1,32 @@
-name: hello-world
-on: push
+name: Sync Docs Content Configs
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        description: environment to execute
+        required: false
+        default: production
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: string
+        description: environment to execute
+        required: false
+        default: production
+
 jobs:
-  my-job:
-    runs-on: ubuntu-latest
-    steps:
-      - name: my-step
-        run: echo "Hello World!"
+  stage-generate-content-configs:
+    name: Staging Generate Content Configs
+    runs-on: [cache-3, self-hosted]
+    steps:          
+      - name: Deploy configs for all countries
+        uses: ./.github/actions/aws-sync-countries
+        with:
+          S3: s3://rzp-1018-myproject-betasite.dev.com
+          LOCAL_DIR: ./configs-to-export-
+          S3_DIR: configs
+          UNIVERSE_PUBLIC_ORG_SUPPORTED_COUNTRIES: "IN,MY,SG"
+          AWS_SECRET_ACCESS_KEY: "Test"
+          AWS_ACCESS_KEY_ID: "Test"
